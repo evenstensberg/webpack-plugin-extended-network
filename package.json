@@ -1,0 +1,11 @@
+{
+  "name": "webpack-plugin-extended-network",
+  "version": "0.0.1",
+  "description": "Chrome Protocol extended info for your bundles",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Even Stensberg <evenstensberg@gmail.com>",
+  "license": "MIT"
+}
