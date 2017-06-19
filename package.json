@@ -4,11 +4,12 @@
   "description": "Chrome Protocol extended info for your bundles",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ./lib"
+    "lint": "eslint ./lib && eslint ./index.js"
   },
   "author": "Even Stensberg <evenstensberg@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^1.1.3",
     "chrome-launcher": "^0.1.3",
     "ws": "^3.0.0"
   },

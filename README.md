@@ -1,6 +1,6 @@
 # webpack-plugin-extended-network
 
-This is an experimental webpack plugin for analyzing how your bundle performs under the chrome protocol.
+webpack plugin for analyzing how your bundle performs under the chrome protocol. This plugin is experimental and the API might change in the future.
 
 ## Installation
 
@@ -42,7 +42,7 @@ module.exports = {
 
 ## Additional Usage
 
-For additional resources on flags see: 
+For additional resources on flags see:
  - http://peter.sh/experiments/chromium-command-line-switches/
  - https://github.com/GoogleChrome/lighthouse/tree/master/chrome-launcher
 
@@ -60,7 +60,29 @@ module.exports = {
  ],
  devServer: {
    ...
-   port: 3000 
+   port: 3000
+ }
+}
+```
+
+## Handy Options
+
+```js
+const NetworkPlugin = require('webpack-plugin-extended-network');
+const path = require('path');
+
+module.exports = {
+ ...
+ plugins: [
+   new NetworkPlugin({
+     printJSON: true,
+     printPath: path.join(__dirname, '..', 'forest', 'gump')
+     // defaults to path.join(process.cwd() + /network-records.json)
+   })
+ ],
+ devServer: {
+   ...
+   port: 3000
  }
 }
 ```
