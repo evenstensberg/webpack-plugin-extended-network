@@ -6,6 +6,7 @@ module.exports = class NetworkPlugin {
     this.chunkPaths = [];
     this.url = options.url || '';
     this.flags = options.flags || [];
+    this.headless = (options.headless === false) ? false : true;
   }
   apply(compiler) {
     if(this.url.length === 0) {
