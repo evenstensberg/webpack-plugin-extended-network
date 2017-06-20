@@ -16,12 +16,12 @@ Install the plugin through npm:
 const NetworkPlugin = require('webpack-plugin-extended-network');
 
 module.exports = {
-...
-plugins: [
-  new NetworkPlugin({
-    url: 'http://localhost:3000'
-  })
-]
+  ...
+  plugins: [
+    new NetworkPlugin({
+      url: 'http://localhost:3000'
+    })
+  ]
 }
 ```
 
@@ -31,14 +31,14 @@ plugins: [
 const NetworkPlugin = require('webpack-plugin-extended-network');
 
 module.exports = {
- ...
- plugins: [
-   new NetworkPlugin()
- ],
- devServer: {
-   ...
-   port: 3000
- }
+  ...
+  plugins: [
+    new NetworkPlugin()
+  ],
+  devServer: {
+    ...
+    port: 3000
+  }
 }
 ```
 
@@ -53,17 +53,17 @@ For additional resources on flags see:
 const NetworkPlugin = require('webpack-plugin-extended-network');
 
 module.exports = {
- ...
- plugins: [
-   new NetworkPlugin({
-     flags: ['--disable-gpu'],
-     headless: false // default is true
-   })
- ],
- devServer: {
-   ...
-   port: 3000
- }
+  ...
+  plugins: [
+    new NetworkPlugin({
+      flags: ['--disable-gpu'],
+      headless: false // default is true
+    })
+  ],
+  devServer: {
+    ...
+    port: 3000
+  }
 }
 ```
 
@@ -74,18 +74,18 @@ const NetworkPlugin = require('webpack-plugin-extended-network');
 const path = require('path');
 
 module.exports = {
- ...
- plugins: [
-   new NetworkPlugin({
-     printJSON: true,
-     printPath: path.join(__dirname, '..', 'forest', 'gump')
-     // defaults to path.join(process.cwd() + /network-records.json)
-   })
- ],
- devServer: {
-   ...
-   port: 3000
- }
+  ...
+  plugins: [
+    new NetworkPlugin({
+      printJSON: true,
+      printPath: path.join(__dirname, '..', 'forest', 'gump')
+      // defaults to path.join(process.cwd() + /network-records.json)
+    })
+  ],
+  devServer: {
+    ...
+    port: 3000
+  }
 }
 ```
 
