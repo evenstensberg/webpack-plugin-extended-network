@@ -92,7 +92,6 @@ module.exports = {
 ## Further Work
 
 + Extensive network records with page redirects
-+ Add how the script was injected or loaded to the browser ( ex: `<link rel="preload">` )
 + Add metrics for Time to Interactive and First meaningful paint
 
 ## Nice Links
@@ -101,8 +100,8 @@ module.exports = {
 - [Chrome Launcher](https://github.com/GoogleChrome/lighthouse/tree/master/chrome-launcher)
 - [Chrome Protocol](https://chromedevtools.github.io/devtools-protocol/)
 
-I'd like to thank the authors of lighthouse for making a great tool, most of this work is inspired by them. No copyright infringement intended. 
+I'd like to thank the authors of lighthouse for making a great tool, most of this work is inspired by them. No copyright infringement intended.
 
 ## Contributing
 
-Send a PR, post an issue, would love help! 
+Send a PR, post an issue, would love help!

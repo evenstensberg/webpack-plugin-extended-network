@@ -51,6 +51,11 @@ module.exports = class NetworkPlugin {
       launchHeadless(this).then(chunkInfo => {
         process.stdout.write('\n' + chalk.bold('webpack-plugin-extended-network:') + '\n\n');
         chunkInfo.forEach( (chunk) => {
+          const scriptInjection = Object.keys(chunk.attributes).map( (elem, index) => {
+            if (index % 2 === 0) {
+              return chunk.attributes[index] + '=' + chunk.attributes[index + 1];
+            }
+          }).filter(val => val);
           process.stdout.write(chalk.red('Asset: ') + chunk.chunkName + '\n\n');
           printHeaderBasedOnWidth('General');
           process.stdout.write('\n\n' + chalk.bold('Type: ') +
@@ -74,8 +79,13 @@ module.exports = class NetworkPlugin {
             chalk.bold('Served from Service Worker: ') +
             chunk.params.response.fromServiceWorker + '\n' +
             chalk.bold('Protocol: ') + chunk.params.response.protocol + '\n' +
-            chalk.bold('Security State: ') + chunk.params.response.securityState + '\n\n'
+            chalk.bold('Security State: ') + chunk.params.response.securityState + '\n'
           );
+          process.stdout.write(chalk.bold('HTML tag: ') + '< ' + chunk.injectionType + ' ');
+          scriptInjection.forEach( (item) => {
+            process.stdout.write(item + ' ');
+          });
+          process.stdout.write('>\n\n');
           for (let k = 0; k < process.stdout.columns; k++) {
             process.stdout.write(chalk.blue.bold('#'));
           }
