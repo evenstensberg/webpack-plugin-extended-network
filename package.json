@@ -9,13 +9,13 @@
   "author": "Even Stensberg <evenstensberg@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^1.1.3",
-    "chrome-launcher": "^0.1.3",
-    "ws": "^3.0.0"
+    "chalk": "^4.1.1",
+    "chrome-launcher": "^0.13.4",
+    "ws": "^7.4.5"
   },
   "devDependencies": {
-    "eslint": "^4.0.0",
-    "eslint-config-google": "^0.8.0"
+    "eslint": "^7.24.0",
+    "eslint-config-google": "^0.14.0"
   },
   "repository": {
     "type": "git",
