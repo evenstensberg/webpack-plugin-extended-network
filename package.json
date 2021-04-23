@@ -10,10 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.1",
-    "chrome-launcher": "^0.13.4",
-    "chrome-remote-interface": "^0.30.0",
-    "puppeteer": "^9.0.0",
-    "ws": "^7.4.5"
+    "puppeteer": "^9.0.0"
   },
   "devDependencies": {
     "eslint": "^7.24.0",
