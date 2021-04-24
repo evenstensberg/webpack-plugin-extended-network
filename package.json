@@ -14,7 +14,11 @@
   },
   "devDependencies": {
     "eslint": "^7.24.0",
-    "eslint-config-google": "^0.14.0"
+    "eslint-config-google": "^0.14.0",
+    "webpack": "^5.35.1"
+  },
+  "peerDependencies": {
+    "webpack": "^5.35.1"
   },
   "repository": {
     "type": "git",

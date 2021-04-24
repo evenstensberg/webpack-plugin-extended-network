@@ -13,13 +13,17 @@ const printHeaderBasedOnWidth = (title) => {
   }
 };
 
-module.exports = class NetworkPlugin {
+class NetworkPlugin {
   constructor(options) {
     this.chunkPaths = [];
     this.url = options.url || '';
   }
 
   apply(compiler) {
+    compiler.hooks.done.tap('NetworkPlugin', () => {
+      require('./test.js')(this.chunkPaths);
+    })
+
     if (this.url.length === 0) {
       if (compiler.options.devServer) {
         const port = compiler.options.devServer.port || undefined;
@@ -33,18 +37,15 @@ module.exports = class NetworkPlugin {
         throw new SyntaxError('No URL detected nor any devServer configuration');
       }
     }
-    compiler.plugin('emit', (compilation, callback) => {
+    compiler.hooks.emit.tap('NetworkPlugin', (compilation) => {
       compilation.chunks.forEach(chunk => {
         chunk.files.forEach(filename => {
           this.chunkPaths.push(filename);
         });
       });
-      callback();
     });
 
-    compiler.plugin('done', () => {
-      console.log("HEY")
-      require('./test.js')()
-    })
   }
 };
+
+module.exports = NetworkPlugin;

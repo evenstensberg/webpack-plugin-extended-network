@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 
-(async () => {
+(async (chunks) => {
+  console.log(chunks);
     const browser = await puppeteer.launch();
     const [page] = await browser.pages();
 
