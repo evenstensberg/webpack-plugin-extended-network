@@ -16,15 +16,12 @@ const printHeaderBasedOnWidth = (title) => {
 class NetworkPlugin {
   constructor(options) {
     this.chunkPaths = [];
-    this.url = options.url || '';
+    this.url = options.url || null;
+    
   }
 
   apply(compiler) {
-    compiler.hooks.done.tap('NetworkPlugin', () => {
-      require('./test.js')(this.chunkPaths);
-    })
-
-    if (this.url.length === 0) {
+    if (!this.url) {
       if (compiler.options.devServer) {
         const port = compiler.options.devServer.port || undefined;
         const host = compiler.options.devServer.host || undefined;
@@ -37,6 +34,14 @@ class NetworkPlugin {
         throw new SyntaxError('No URL detected nor any devServer configuration');
       }
     }
+    compiler.hooks.done.tapAsync(  {
+      name: "webpack-network-plugin",
+      stage: 9999,
+    }, async () => {
+      const runner = require('./test.js');
+      await runner(this.chunkPaths, this.url);
+    })
+
     compiler.hooks.emit.tap('NetworkPlugin', (compilation) => {
       compilation.chunks.forEach(chunk => {
         chunk.files.forEach(filename => {

@@ -1,7 +1,20 @@
 const puppeteer = require('puppeteer');
+const chalk = require('chalk');
 
-(async (chunks) => {
-  console.log(chunks);
+
+
+const printHeaderBasedOnWidth = (title) => {
+  const half = Math.round(process.stdout.columns / 2);
+  for (let k = 0; k < process.stdout.columns; k++) {
+    if (k === half) {
+      process.stdout.write(title);
+      k += title.length;
+    }
+    process.stdout.write(chalk.blue.bold('-'));
+  }
+};
+
+module.exports = async (chunks, url) => {
     const browser = await puppeteer.launch();
     const [page] = await browser.pages();
 
@@ -28,7 +41,7 @@ const puppeteer = require('puppeteer');
             request.continue();
         }
     });
-
+    process.stdout.write('\n' + chalk.bold('webpack-plugin-extended-network:') + '\n\n');
     page.on('requestfinished', async (request) => {
         const response = await request.response();
 
@@ -38,16 +51,37 @@ const puppeteer = require('puppeteer');
             // body can only be access for non-redirect responses
             responseBody = await response.buffer();
         }
+        const requestUrl = request.url();
 
-        const information = {
-            url: request.url(),
-            requestHeaders: request.headers(),
-            requestPostData: request.postData(),
-            responseHeaders: responseHeaders,
-            responseSize: responseHeaders['content-length'],
-            responseBody,
-        };
-        results.push(information);
+        chunks.forEach(chunk => {
+          if(requestUrl.indexOf(chunk) >= 0) {
+            const information = {
+              url: request.url(),
+              responseHeaders: responseHeaders,
+              responseSize: responseHeaders['content-length'],
+              responseBody,
+            };
+            process.stdout.write(chalk.red('Asset: ') + chunk + '\n\n');
+            printHeaderBasedOnWidth('General');
+            process.stdout.write('\n\n' + chalk.bold('Type: ') +
+            information.responseHeaders['content-type'] + '\n' +
+            chalk.bold('Resource URL: ') + requestUrl + '\n'
+          );
+          printHeaderBasedOnWidth('Headers');
+          process.stdout.write('\n\n');
+          Object.keys(information.responseHeaders).forEach(header => {
+            process.stdout.write(
+              '\n' + chalk.bold(header + ': ') + information.responseHeaders[header] + '\n'
+            );
+          });
+          process.stdout.write('\n');
+          process.stdout.write('>\n\n');
+          for (let k = 0; k < process.stdout.columns; k++) {
+            process.stdout.write(chalk.blue.bold('#'));
+          }
+          process.stdout.write('\n\n');
+          }
+        })
 
         nextRequest(); // continue with next request
     });
@@ -56,8 +90,7 @@ const puppeteer = require('puppeteer');
         nextRequest();
     });
 
-    await page.goto('http://localhost:8090', { waitUntil: 'networkidle0' });
-    console.log(results);
+    await page.goto(url, { waitUntil: 'networkidle0' });
 
     await browser.close();
-})();
+};
